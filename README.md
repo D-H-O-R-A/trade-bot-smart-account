@@ -1,2 +1,2 @@
-# trade-bot-smart-contract
+# Smart Account For Bot
 Trading bot smart contract
