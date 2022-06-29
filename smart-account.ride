@@ -7,7 +7,9 @@ let axai = base58'<assetId>'
 let usdn = base58'<other-asset-id>'
 
 match (tx) {
-    case e: ExchangeTransaction => if(e.buyOrder.orderType == Buy) then if(e.buyOrder.assetPair.amountAsset == axai && e.buyOrder.assetPair.priceAsset == usdn) then sigVerify(e.bodyBytes, e.proofs[0], e.senderPublicKey) else false else if(e.sellOrder.assetPair.amountAsset == axai && e.sellOrder.assetPair.priceAsset == usdn) then sigVerify(e.bodyBytes, e.proofs[0], e.senderPublicKey) else false
+    case order: Order => if(order.orderType == Buy) then if(order.assetPair.amountAsset == axai && order.assetPair.priceAsset == usdn) then sigVerify(order.bodyBytes, order.proofs[0], order.senderPublicKey) else false else if(order.assetPair.amountAsset == axai && order.assetPair.priceAsset == usdn) then sigVerify(order.bodyBytes, order.proofs[0], order.senderPublicKey) else false
     case tt: TransferTransaction => tt.recipient == addressReceive
+    case e: ExchangeTransaction => if(e.buyOrder.orderType == Buy) then if(e.buyOrder.assetPair.amountAsset == axai && e.buyOrder.assetPair.priceAsset == usdn) then sigVerify(e.bodyBytes, e.proofs[0], e.senderPublicKey) else false else if(e.sellOrder.assetPair.amountAsset == axai && e.sellOrder.assetPair.priceAsset == usdn) then sigVerify(e.bodyBytes, e.proofs[0], e.senderPublicKey) else false
     case _ => sigVerify(tx.bodyBytes, tx.proofs[0], tx.senderPublicKey)
 }
+
